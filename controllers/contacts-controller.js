@@ -1,18 +1,3 @@
-
-import * as contactService from "../models/contacts.js";
-import {
-  contactAddSchema,
-  contactUpdateSchema,
-} from "../schemas/contact-schemas.js";
-
-const HttpError = (status, message) => {
-  const error = new Error(message);
-  error.status = status;
-  return error;
-};
-
-const getAll = async (req, res, next) => {
-
 import contactService from "../models/index.js";
 import HttpError from "../helpers/htppEror.js";
 import {
@@ -87,25 +72,10 @@ const deleteById = async (req, res, next) => {
   }
 };
 
-const add = async (req, res, next) => {
-  try {
-    const { error } = contactAddSchema.validate(req.body);
-    if (error) {
-      throw HttpError(400, "missing required name! field");
-    }
-    const result = await contactService.addContact(req.body);
-
-    res.status(201).json(result);
-  } catch (error) {
-    next(error);
-  }
-};
-
 export default {
-  getAll,
+  getAllContacts,
   getById,
-  deleteById,
   add,
   updateById,
   deleteById,
-}
+};
