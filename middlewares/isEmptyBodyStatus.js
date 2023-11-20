@@ -4,12 +4,12 @@ const HttpError = (status, message) => {
   return error;
 };
 
-const isEmptyBody = async (req, res, next) => {
+const isEmptyBodyStatus = async (req, res, next) => {
   const keys = Object.keys(req.body);
   if (!keys.length) {
-    return next(HttpError(400, "Missing fields"));
+    return next(HttpError(400, "Missing field favorite"));
   }
   next();
 };
 
-export default isEmptyBody;
+export default isEmptyBodyStatus;
