@@ -1,9 +1,6 @@
 import { nanoid } from "nanoid";
 import fs from "fs/promises";
 import path from "path";
-// const fs = require("fs/promises");
-
-// const path = require("path");
 
 const contactsPath = path.resolve("models", "contacts.json");
 

@@ -1,5 +1,5 @@
 import contactService from "../models/index.js";
-import HttpError from "../helpers/htppEror.js";
+import HttpError from "../helpers/HttpError.js";
 import {
   contactAddSchema,
   contactUpdateSchema,
