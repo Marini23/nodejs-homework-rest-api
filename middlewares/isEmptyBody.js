@@ -1,8 +1,4 @@
-const HttpError = (status, message) => {
-  const error = new Error(message);
-  error.status = status;
-  return error;
-};
+import HttpError from "../helpers/HttpError.js";
 
 const isEmptyBody = async (req, res, next) => {
   const keys = Object.keys(req.body);
