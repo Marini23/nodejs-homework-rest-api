@@ -21,7 +21,6 @@ const userSchema = new Schema(
       default: "starter",
     },
     token: String,
-
   },
   { versionKey: false, timestamps: true }
 );
@@ -64,6 +63,12 @@ export const userSingInSchema = Joi.object({
   }),
 
   token: Joi.string(),
+});
+
+export const userSubscriptionSchema = Joi.object({
+  subscription: Joi.string()
+    .valid(...subscriptionList)
+    .required(),
 });
 
 const User = model("user", userSchema);

@@ -4,7 +4,11 @@ import authController from "../../controllers/auth-controller.js";
 import isEmptyBody from "../../middlewares/isEmptyBody.js";
 import validateBody from "../../decorators/validateBody.js";
 import authenticate from "../../middlewares/authenticate.js";
-import { userSingInSchema, userSingUpSchema } from "../../models/User.js";
+import {
+  userSingInSchema,
+  userSingUpSchema,
+  userSubscriptionSchema,
+} from "../../models/User.js";
 
 const authRouter = express.Router();
 
@@ -25,5 +29,12 @@ authRouter.post(
 authRouter.get("/current", authenticate, authController.getCurrent);
 
 authRouter.post("/logout", authenticate, authController.logout);
+
+authRouter.patch(
+  "/",
+  authenticate,
+  validateBody(userSubscriptionSchema),
+  authController.updateUserSubscription
+);
 
 export default authRouter;
