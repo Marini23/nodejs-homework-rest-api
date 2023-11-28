@@ -4,6 +4,7 @@ import isEmptyBody from "../../middlewares/isEmptyBody.js";
 import isEmptyBodyStatus from "../../middlewares/isEmptyBodyStatus.js";
 import validateBody from "../../decorators/validateBody.js";
 import isValidId from "../../middlewares/isValidId.js";
+import authenticate from "../../middlewares/authenticate.js";
 import {
   contactAddSchema,
   contactUpdateSchema,
@@ -11,6 +12,8 @@ import {
 } from "../../models/Contact.js";
 
 const contactsRouter = express.Router();
+
+contactsRouter.use(authenticate);
 
 contactsRouter.get("/", contactController.getAllContacts);
 

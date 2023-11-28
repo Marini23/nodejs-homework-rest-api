@@ -3,13 +3,22 @@ import ctrlWrapper from "../decorators/ctrlWrapper.js";
 import HttpError from "../helpers/HttpError.js";
 
 const getAllContacts = async (req, res) => {
-  const result = await Contact.find({}, "-createdAt -updatedAt");
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 20, ...filterParams } = req.query;
+  const skip = (page - 1) * limit;
+  const filter = { owner, ...filterParams };
+  const result = await Contact.find(filter, "-createdAt -updatedAt", {
+    skip,
+    limit,
+  }).populate("owner", "email");
+  // const total = await Movie.countDocuments(filter);
   res.json(result);
 };
 
 const getById = async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findById(id);
+  const { _id: owner } = req.user;
+  const result = await Contact.findById({ _id: id, owner });
   if (!result) {
     throw HttpError(404, `Not found`);
   }
@@ -17,13 +26,15 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
 const updateById = async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndUpdate(id, req.body, {
+  const { _id: owner } = req.user;
+  const result = await Contact.findByIdAndUpdate({ _id: id, owner }, req.body, {
     new: true,
     runValidators: true,
   });
@@ -35,7 +46,8 @@ const updateById = async (req, res) => {
 
 const deleteById = async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndDelete(id);
+  const { _id: owner } = req.user;
+  const result = await Contact.findByIdAndDelete({ _id: id, owner });
   if (!result) {
     throw HttpError(404, `Not found`);
   }
@@ -46,7 +58,8 @@ const deleteById = async (req, res) => {
 
 const updateStatusContact = async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndUpdate(id, req.body, {
+  const { _id: owner } = req.user;
+  const result = await Contact.findByIdAndUpdate({ _id: id, owner }, req.body, {
     new: true,
     runValidators: true,
   });
