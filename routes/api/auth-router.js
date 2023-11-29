@@ -4,6 +4,7 @@ import authController from "../../controllers/auth-controller.js";
 import isEmptyBody from "../../middlewares/isEmptyBody.js";
 import validateBody from "../../decorators/validateBody.js";
 import authenticate from "../../middlewares/authenticate.js";
+import upload from "../../middlewares/upload.js";
 import {
   userSingInSchema,
   userSingUpSchema,
@@ -14,6 +15,7 @@ const authRouter = express.Router();
 
 authRouter.post(
   "/register",
+  upload.single("avatar"),
   isEmptyBody,
   validateBody(userSingUpSchema),
   authController.signup
