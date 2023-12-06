@@ -2,6 +2,7 @@ import express from "express";
 
 import authController from "../../controllers/auth-controller.js";
 import isEmptyBody from "../../middlewares/isEmptyBody.js";
+import isEmptyBodyEmail from "../../middlewares/isEmptyBodyEmail.js";
 import validateBody from "../../decorators/validateBody.js";
 import authenticate from "../../middlewares/authenticate.js";
 import upload from "../../middlewares/upload.js";
@@ -9,8 +10,8 @@ import {
   userSingInSchema,
   userSingUpSchema,
   userSubscriptionSchema,
+  userEmailSchema,
 } from "../../models/User.js";
-import isEmptyBodyAvatar from "../../middlewares/isEmptyBodyAvatar.js";
 
 const authRouter = express.Router();
 
@@ -20,6 +21,15 @@ authRouter.post(
   isEmptyBody,
   validateBody(userSingUpSchema),
   authController.signup
+);
+
+authRouter.get("/verify/:verificationToken", authController.verify);
+
+authRouter.post(
+  "/verify",
+  isEmptyBodyEmail,
+  validateBody(userEmailSchema),
+  authController.resendVerify
 );
 
 authRouter.post(
