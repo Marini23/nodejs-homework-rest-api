@@ -11,26 +11,7 @@ const msg = {
   html: "<strong>and easy to do anywhere, even with Node.js</strong>",
 };
 
-// const sendEmail = sgMail
-//   .send(msg)
-//   .then((response) => {
-//     console.log(response[0].statusCode);
-//     console.log("Email sent");
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
-
 const sendEmail = (msg) => {
   return sgMail.send(msg);
 };
 export default sendEmail;
-// sgMail
-//   .send(msg)
-//   .then((response) => {
-//     console.log(response[0].statusCode);
-//     console.log("Email sent");
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });

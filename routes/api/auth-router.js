@@ -27,7 +27,6 @@ authRouter.get("/verify/:verificationToken", authController.verify);
 
 authRouter.post(
   "/verify",
-  isEmptyBodyEmail,
   validateBody(userEmailSchema),
   authController.resendVerify
 );
